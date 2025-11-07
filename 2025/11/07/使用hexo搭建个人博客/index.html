@@ -14,7 +14,7 @@
 <meta property="og:description" content="本文详细记录从工具安装到博客上线的完整流程，适合零基础新手，跟着步骤走就能成功搭建属于自己的个人博客～ 一、下载必备工具1. 下载Node.js 官网地址：https:&#x2F;&#x2F;nodejs.org&#x2F; （推荐下载「LTS长期支持版」，兼容性更好） 可选优化：若C盘空间紧张，可参考这篇文章修改Node.js缓存路径（替换为你的实际文章链接，无需优化可忽略）。  2. 下载Git 官网地址：https:&#x2F;&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-07T00:28:43.000Z">
-<meta property="article:modified_time" content="2025-11-07T01:31:57.295Z">
+<meta property="article:modified_time" content="2025-11-07T02:20:01.850Z">
 <meta property="article:author" content="YuAn">
 <meta property="article:tag" content="GitHub Pages">
 <meta property="article:tag" content="Hexo">
@@ -122,6 +122,138 @@
 <li>依次输入以下3条命令，能正常显示版本号即代表安装成功：</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node -v  <span class="comment"># 查看Node.js版本（示例输出：v20.10.0）</span></span><br><span class="line">npm -v   <span class="comment"># 查看npm版本（Node.js自带，示例输出：10.2.3）</span></span><br><span class="line">git -v   <span class="comment"># 查看Git版本（示例输出：git version 2.43.0.windows.1）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="三、安装-Hexo-脚手架（博客核心工具）"><a href="#三、安装-Hexo-脚手架（博客核心工具）" class="headerlink" title="三、安装 Hexo 脚手架（博客核心工具）"></a>三、安装 Hexo 脚手架（博客核心工具）</h3><p>在 CMD 或 Git Bash 中输入以下命令，全局安装 Hexo 命令行工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装成功后，输入 <code>hexo -v</code> 能显示版本号即代表生效（示例输出：hexo-cli: 4.3.0）。</li>
+</ul>
+<h3 id="四、搭建-GitHub-仓库（存储博客静态页面）"><a href="#四、搭建-GitHub-仓库（存储博客静态页面）" class="headerlink" title="四、搭建 GitHub 仓库（存储博客静态页面）"></a>四、搭建 GitHub 仓库（存储博客静态页面）</h3><ol>
+<li>注册 &#x2F; 登录 GitHub：访问官网 <a target="_blank" rel="noopener" href="https://github.com/%EF%BC%8C%E5%B7%B2%E6%9C%89%E8%B4%A6%E5%8F%B7%E7%9B%B4%E6%8E%A5%E7%99%BB%E5%BD%95%EF%BC%8C%E6%97%A0%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C%E5%8D%B3%E5%8F%AF%EF%BC%88%E5%85%8D%E8%B4%B9%EF%BC%89%E3%80%82">https://github.com/，已有账号直接登录，无账号注册即可（免费）。</a></li>
+<li>新建仓库：点击右上角「+」号 → 选择「Create a new repository」。</li>
+<li>仓库关键配置（必须按要求填写）：<ul>
+<li>仓库名：<code>你的GitHub用户名.github.io</code>（例如我的用户名是 xxxx，仓库名就是<code>xxxx.github.io</code>）。</li>
+<li>可见性：勾选「Public」（GitHub Pages 仅支持公开仓库，私有仓库无法访问）。</li>
+<li>其他选项：勾选「Add a README file」（可选，方便记录仓库说明）。</li>
+</ul>
+</li>
+<li>完成创建：拉到页面底部，点击「Create repository」即可。</li>
+</ol>
+<h3 id="五、生成-SSH-密钥（连接本地与-GitHub）"><a href="#五、生成-SSH-密钥（连接本地与-GitHub）" class="headerlink" title="五、生成 SSH 密钥（连接本地与 GitHub）"></a>五、生成 SSH 密钥（连接本地与 GitHub）</h3><ol>
+<li><p>任意文件夹空白处右键 → 选择「Git Bash Here」（打开 Git 命令行）。</p>
+</li>
+<li><p>生成密钥：输入以下命令（替换为你的 GitHub 绑定邮箱），然后 <strong>连续按 4 次回车键</strong>（无需输入密码，直接跳过）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的GitHub邮箱@example.com&quot;</span>  <span class="comment"># 示例：ssh-keygen -t rsa -C &quot;xxxx@qq.com&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>​	3.找到密钥文件：</p>
+<ul>
+<li>打开路径 <code>C:\Users\你的Windows用户名\.ssh</code>（例如 <code>C:\Users\Lenovo\.ssh</code>）。</li>
+<li>用记事本打开 <code>id_rsa.pub</code> 文件，全选复制里面的所有文本（不要遗漏任何字符）。</li>
+</ul>
+<ol start="4">
+<li>配置 GitHub SSH 密钥：</li>
+</ol>
+<ul>
+<li>登录 GitHub → 点击右上角头像 → 选择「Settings」（设置）。</li>
+<li>左侧菜单找到「SSH and GPG keys」 → 点击「New SSH key」。</li>
+<li>Title：任意填写（如「笔记本电脑密钥」，仅用于区分设备）。</li>
+<li>Key：粘贴刚才复制的 <code>id_rsa.pub</code> 内容。</li>
+<li>点击「Add SSH key」完成配置。</li>
+</ul>
+<ol start="5">
+<li>验证连接：在 Git Bash 中输入以下命令，回车后输入「yes」确认：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>成功提示：出现「Hi 你的用户名！You’ve successfully authenticated, but GitHub does not provide shell access.」即代表连接成功。</li>
+</ul>
+<h3 id="六、本地生成博客内容（核心步骤）"><a href="#六、本地生成博客内容（核心步骤）" class="headerlink" title="六、本地生成博客内容（核心步骤）"></a>六、本地生成博客内容（核心步骤）</h3><ol>
+<li>新建博客文件夹：在你喜欢的位置新建文件夹（如 <code>D:\BlogFlie</code>），进入该文件夹。</li>
+<li>初始化博客：右键空白处 → 选择「Git Bash Here」，执行以下命令：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init  <span class="comment"># 若提示“command not found”，则用：npx hexo init</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>等待执行完成（会自动下载博客模板和依赖，国内网络可能较慢，耐心等待）。</li>
+</ul>
+<ol start="3">
+<li>安装依赖包：初始化完成后，执行以下命令安装必要依赖：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install  <span class="comment"># 注意：原文“hexo install”是笔误，正确命令为npm install</span></span><br></pre></td></tr></table></figure>
+
+<p>​	4.本地预览博客：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g  <span class="comment"># 生成静态文件（g = generate，缩写）</span></span><br><span class="line">hexo s  <span class="comment"># 启动本地服务器（s = server，缩写）</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>成功提示：命令行显示 <code>INFO Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</code>。</li>
+<li>访问预览：复制 <code>http://localhost:4000</code> 到浏览器，即可看到默认博客页面。</li>
+<li>关闭服务器：在命令行中按 <code>Ctrl + C</code> 即可停止本地服务。</li>
+</ul>
+<h3 id="七、上线博客到-GitHub-Pages（让别人能访问）"><a href="#七、上线博客到-GitHub-Pages（让别人能访问）" class="headerlink" title="七、上线博客到 GitHub Pages（让别人能访问）"></a>七、上线博客到 GitHub Pages（让别人能访问）</h3><h4 id="1-配置部署信息"><a href="#1-配置部署信息" class="headerlink" title="1. 配置部署信息"></a>1. 配置部署信息</h4><ol>
+<li>打开博客根目录（如 <code>D:\BlogFlie</code>），用记事本打开 <code>_config.yml</code> 文件（Hexo 主配置文件）。</li>
+<li>拉到文件最底部，找到 <code>deploy</code> 部分，替换为以下内容（注意格式：冒号后必须留 1 个空格，缩进用 2 个空格）：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">https://github.com/你的GitHub用户名/你的GitHub用户名.github.io.git</span>  <span class="comment"># 替换为你的仓库HTTPS链接</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>获取仓库 HTTPS 链接：</li>
+</ol>
+<ul>
+<li>打开你的 GitHub 仓库 → 点击「Code」按钮 → 复制「HTTPS」标签下的链接（示例：<code>https://github.com/2134998141/2134998141.github.io.git</code>）。</li>
+</ul>
+<ol start="4">
+<li>保存 <code>_config.yml</code> 文件并关闭。</li>
+</ol>
+<h4 id="2-安装部署插件"><a href="#2-安装部署插件" class="headerlink" title="2. 安装部署插件"></a>2. 安装部署插件</h4><p>在 Git Bash 中执行以下命令，安装 Hexo Git 部署插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-配置-Git-用户信息（首次部署需配置）"><a href="#3-配置-Git-用户信息（首次部署需配置）" class="headerlink" title="3. 配置 Git 用户信息（首次部署需配置）"></a>3. 配置 Git 用户信息（首次部署需配置）</h4><p>在 Git Bash 中输入以下命令（替换为你的 GitHub 邮箱和用户名）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email <span class="string">&quot;你的GitHub邮箱@example.com&quot;</span>  <span class="comment"># 示例：2134998141@qq.com</span></span><br><span class="line">git config --global user.name <span class="string">&quot;你的GitHub用户名&quot;</span>  <span class="comment"># 示例：xxxx</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-部署到-GitHub"><a href="#4-部署到-GitHub" class="headerlink" title="4. 部署到 GitHub"></a>4. 部署到 GitHub</h4><p>在 Git Bash 中依次执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean  <span class="comment"># 清理旧的静态文件（可选，建议每次部署前执行，避免缓存）</span></span><br><span class="line">hexo g      <span class="comment"># 重新生成静态文件</span></span><br><span class="line">hexo d      <span class="comment"># 部署到GitHub（d = deploy，缩写）</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>登录验证：若弹出 GitHub 登录窗口，按提示登录你的账号即可。</li>
+<li>成功提示：命令行显示 <code>INFO Deploy done: git</code> 即代表部署成功。</li>
+<li>访问博客：等待 1-5 分钟（GitHub Pages 生效需要时间），访问 <code>https://你的GitHub用户名.github.io</code>（示例：<code>https://xxxx.github.io</code>），即可看到线上博客。</li>
+</ul>
+<h3 id="八、修改博客基础信息（标题、作者等）"><a href="#八、修改博客基础信息（标题、作者等）" class="headerlink" title="八、修改博客基础信息（标题、作者等）"></a>八、修改博客基础信息（标题、作者等）</h3><ol>
+<li>打开博客根目录的 <code>_config.yml</code> 文件，找到 <code># Site</code> 部分，按需求修改：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">YuAn个人博客</span>  <span class="comment"># 你的博客标题</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;春秋一梦&#x27;</span>  <span class="comment"># 副标题（可选）</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;有趣的分享&#x27;</span>  <span class="comment"># 博客描述（用于搜索引擎）</span></span><br><span class="line"><span class="attr">keywords:</span> <span class="string">YuAn,博客,技术分享</span>  <span class="comment"># 关键词（多个用英文逗号分隔）</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">YuAn</span>  <span class="comment"># 作者名称</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span>  <span class="comment"># 语言（中文简体）</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">Asia/Shanghai</span>  <span class="comment"># 时区（中国标准时间，避免时间显示偏差）</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>保存文件后，重新部署生效：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d  <span class="comment"># 合并命令，一步执行清理、生成、部署</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="九、发布新文章（后续维护）"><a href="#九、发布新文章（后续维护）" class="headerlink" title="九、发布新文章（后续维护）"></a>九、发布新文章（后续维护）</h3><h4 id="1-新建文章"><a href="#1-新建文章" class="headerlink" title="1. 新建文章"></a>1. 新建文章</h4><p>在 Git Bash 中执行以下命令，生成新的 Markdown 文章文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span>  <span class="comment"># 示例：hexo new &quot;Hexo博客新手入门指南&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文章路径：生成的 <code>.md</code> 文件保存在 <code>source/_posts/</code> 文件夹中。</li>
+</ul>
+<h4 id="2-编辑文章"><a href="#2-编辑文章" class="headerlink" title="2. 编辑文章"></a>2. 编辑文章</h4><p>推荐使用 Typora 编辑 Markdown 文件（可视化编辑，所见即所得）：</p>
+<ul>
+<li>官网地址：<a target="_blank" rel="noopener" href="https://www.typoraio.cn/%EF%BC%88%E6%AD%A3%E7%89%88">https://www.typoraio.cn/（正版</a> 89 元终身使用，支持开发者）。</li>
+<li>编辑步骤：打开 <code>source/_posts/</code> 中的 <code>.md</code> 文件，用 Typora 编写内容（支持图片、代码块、表格等格式）。</li>
+</ul>
+<h4 id="3-发布文章到线上"><a href="#3-发布文章到线上" class="headerlink" title="3. 发布文章到线上"></a>3. 发布文章到线上</h4><p>编辑完成后，执行以下命令部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean  <span class="comment"># 清理缓存</span></span><br><span class="line">hexo g      <span class="comment"># 生成新静态文件</span></span><br><span class="line">hexo d      <span class="comment"># 部署到GitHub</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>部署成功后，访问你的博客网址，即可看到新发布的文章。</li>
+</ul>
+<h3 id="常见问题排查"><a href="#常见问题排查" class="headerlink" title="常见问题排查"></a>常见问题排查</h3><ol>
+<li>执行 <code>hexo</code> 命令提示 “command not found”：前面加 <code>npx</code>（如 <code>npx hexo g</code>）。</li>
+<li>部署失败提示 SSL 证书错误：执行 <code>git config --global http.sslVerify false</code> 临时关闭验证。</li>
+<li>博客访问 404：检查仓库名是否为「用户名.github.io」，分支是否为 <code>main</code>，部署是否成功。</li>
+<li>本地预览正常，线上样式错乱：检查 <code>_config.yml</code> 中 <code>url</code> 配置是否为你的博客网址（如 <code>url: https://xxxx.github.io</code>）。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 使用说明</span><br><span class="line">1. 替换占位符：将文中「你的GitHub用户名」「你的GitHub邮箱@example.com」替换为你的实际信息（共3处，可全局搜索替换）。</span><br><span class="line">2. 图片处理：把截图 `屏幕截图 2025-11-07 083438.png` 放到 `source/images/` 文件夹（没有就新建），确保截图能正常显示。</span><br><span class="line">3. 链接替换：将文中「你的实际文章链接」替换为你的真实链接（若没有可直接删除该部分文字）。</span><br><span class="line">4. 直接使用：复制上面所有内容，覆盖 `source/_posts/使用hexo搭建个人博客.md` 中的原有内容，执行 `hexo clean &amp;&amp; hexo g &amp;&amp; hexo d` 即可部署生效。</span><br><span class="line"></span><br><span class="line">要不要我帮你生成一份 **Hexo博客问题排查手册**，包含部署失败、样式错乱、文章不显示等常见问题的解决方案，方便你后续遇到问题快速解决？</span><br></pre></td></tr></table></figure>
 
 
       
